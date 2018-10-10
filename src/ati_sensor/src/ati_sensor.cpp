@@ -1,5 +1,6 @@
 #include <ati_sensor/ati_sensor.h>
-#include <QCoreApplication>
+#include <boost/thread/thread.hpp> 
+#include <boost/bind.hpp>
 
 ATI_sensor::ATI_sensor(std::string& ipaddress)
 {
@@ -151,6 +152,23 @@ void ATI_sensor::zero()
     recv(clisock, (char*)response, 36, 0);
     for (int i = 0; i < 6; ++i)
         resp.FTZero[i] = ntohl(*(int32*)&response[12 + i * 4]);
+}
+
+void ATI_sensor::read_all()
+{
+    filter();
+    boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+}
+
+void ATI_sensor::create_thread()
+{
+    thrd = boost::thread(boost::bind(&read_all));
+}
+
+void ATI_sensor::destroy_thread()
+{
+    thrd.interrupt();
+    thrd.join();
 }
 /*
 int main(int argc, char *argv[])

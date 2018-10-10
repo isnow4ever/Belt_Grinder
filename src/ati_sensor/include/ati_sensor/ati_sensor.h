@@ -76,7 +76,11 @@ public:
     void read();
     void filter();
     void zero();
+    static void read_all();
+    static void create_thread();
+    static void destroy_thread();
     
+    boost::thread thrd; 
     byte request[8];
     byte response[36];
     RESPONSE resp;
