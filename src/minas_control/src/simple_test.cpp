@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
 	      printf("target reached\n");
 	      break;
 	    }
-	    printf("Tick %8d.%09d\n", tick.tv_sec, tick.tv_nsec);
+	    printf("Tick %8ld.%09ld\n", tick.tv_sec, tick.tv_nsec);
 	    printf("Input:\n");
 	    printf(" 603Fh %08x :Error code\n", input.error_code);
 	    printf(" 6041h %08x :Statusword\n", input.statusword);

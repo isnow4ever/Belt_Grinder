@@ -22,26 +22,26 @@ include_directories(
 )
 
 ## Declare a C++ library
-add_library(compensation_cylinder
-  src/compensation_cylinder.cpp
-)
+## add_library(compensation_cylinder
+##   src/compensation_cylinder.cpp
+## )
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(compensation_cylinder ATI_sensor ${catkin_LIBRARIES})
+## target_link_libraries(compensation_cylinder ati_sensor ${catkin_LIBRARIES})
 
 #############
 ## Install ##
 #############
 
 # Mark executables and/or libraries for installation
-install(TARGETS compensation_cylinder
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+## install(TARGETS compensation_cylinder
+##   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+##   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+##   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+## )
 
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+## install(DIRECTORY include/${PROJECT_NAME}/
+##   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
 
 
 #############

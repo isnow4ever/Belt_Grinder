@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(belt_grinder)
 
 find_package(catkin REQUIRED COMPONENTS roscpp)
-find_package(ethercat_manager minas_control ATI_sensor compensation_cylinder)
+#find_package(ethercat_manager minas_control ati_sensor compensation_cylinder)
 
 ###################################
 ## catkin specific configuration ##
@@ -29,21 +29,21 @@ include_directories(
 
 ## Specify libraries to link a library or executable target against
 ## add_executable(belt_grinder src/belt_grinder.cpp)
-target_link_libraries(belt_grinder ATI_sensor compensation_cylinder minas_control ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+## target_link_libraries(belt_grinder ati_sensor compensation_cylinder minas_control ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 #############
 ## Install ##
 #############
 
 # Mark executables and/or libraries for installation
-install(TARGETS ATI_sensor
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+## install(TARGETS belt_grinder
+##   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+##   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+##   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+## )
 
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
+## install(DIRECTORY include/${PROJECT_NAME}/
+##   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
 
 
 #############

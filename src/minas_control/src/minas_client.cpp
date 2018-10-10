@@ -461,7 +461,7 @@ void MinasClient::setInterpolationTimePeriod(int us)
   int ret = 0;
   ret += manager_.writeSDO<uint32_t>(slave_no_, 0x1c32, 0x02, u32val);
   ret += manager_.writeSDO<uint8_t>(slave_no_, 0x60c2, 0x01, u8val);
-  printf("Set interpolation time period %d us (%d/%d)\n", us, u32val, u8val, ret);
+  printf("Set interpolation time period %d us (%d/%d); ret = %d\n", us, u32val, u8val, ret);
 
   u32val = manager_.readSDO<uint32_t>(slave_no_, 0x1c32, 0x02);
   u8val = manager_.readSDO<uint8_t>(slave_no_, 0x60c2, 0x01);

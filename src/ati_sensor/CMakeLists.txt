@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ATI_sensor)
+project(ati_sensor)
 
 find_package(catkin REQUIRED COMPONENTS roscpp)
 
@@ -9,7 +9,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp)
 catkin_package(
   INCLUDE_DIRS include
   CATKIN_DEPENDS roscpp
-  LIBRARIES ATI_sensor
+  LIBRARIES ati_sensor
 )
 
 ###########
@@ -22,23 +22,23 @@ include_directories(
 )
 
 ## Declare a C++ library
-add_library(ATI_sensor
-  src/ATI_sensor.cpp
+add_library(ati_sensor
+  src/ati_sensor.cpp
 )
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(ATI_sensor  ${catkin_LIBRARIES})
+target_link_libraries(ati_sensor  ${catkin_LIBRARIES})
 
 #############
 ## Install ##
 #############
 
 # Mark executables and/or libraries for installation
-install(TARGETS ATI_sensor
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+## install(TARGETS ati_sensor
+##   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+##   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+##   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+## )
 
 install(DIRECTORY include/${PROJECT_NAME}/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
