@@ -1,6 +1,0 @@
-/root/workspace/Belt_Grinder/build/CMakeFiles/clean_test_results.dir
-/root/workspace/Belt_Grinder/build/CMakeFiles/doxygen.dir
-/root/workspace/Belt_Grinder/build/gtest/CMakeFiles/gtest.dir
-/root/workspace/Belt_Grinder/build/gtest/CMakeFiles/gtest_main.dir
-/root/workspace/Belt_Grinder/build/CMakeFiles/run_tests.dir
-/root/workspace/Belt_Grinder/build/CMakeFiles/tests.dir

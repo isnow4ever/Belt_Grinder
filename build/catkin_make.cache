@@ -1,2 +1,0 @@
-
--DCATKIN_DEVEL_PREFIX=/root/workspace/Belt_Grinder/devel -DCMAKE_INSTALL_PREFIX=/root/workspace/Belt_Grinder/install -G Unix Makefiles
