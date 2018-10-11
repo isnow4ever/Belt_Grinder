@@ -45,6 +45,9 @@
 #include <sys/time.h>
 #include <signal.h>
 
+#include <boost/thread/thread.hpp> 
+#include <boost/bind.hpp>
+
 using namespace std;
 
 typedef unsigned int uint32;
@@ -76,16 +79,20 @@ public:
     void read();
     void filter();
     void zero();
-    static void read_all();
-    static void create_thread();
-    static void destroy_thread();
+    void read_all();
+    void create_thread();
+    void destroy_thread();
     
-    boost::thread thrd; 
+    
+    RESPONSE resp;
+private:
+    boost::thread thrd;    
     byte request[8];
     byte response[36];
-    RESPONSE resp;
+    
     int SourceNum;//for filter
     RESPONSE respSource[SourceNum];//for filter
+    
     int clisock;
     struct timespec before;
     struct timespec now;

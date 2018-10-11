@@ -1,6 +1,5 @@
 #include <ati_sensor/ati_sensor.h>
-#include <boost/thread/thread.hpp> 
-#include <boost/bind.hpp>
+
 
 ATI_sensor::ATI_sensor(std::string& ipaddress)
 {
@@ -123,10 +122,10 @@ void ATI_sensor::filter()
 
     for (int i = 0; i < 6; i++)
         resp.FTData[i] = ntohl(*(int32*)&response[12 + i * 4])- resp.FTZero[i];
-    // for (int i = 0; i < (SourceNum-1); ++i)
-    //     respSource[i] = respSource[i + 1];
-    // respSource[SourceNum-1] = resp;
-    // RESPONSE resp_aver;
+    for (int i = 0; i < (SourceNum-1); ++i)
+        respSource[i] = respSource[i + 1];
+    respSource[SourceNum-1] = resp;
+    RESPONSE resp_aver;
     for (int i = 0; i < 6; ++i)
     {
         int sum = 0;

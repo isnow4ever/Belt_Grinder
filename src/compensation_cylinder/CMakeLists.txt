@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(compensation_cylinder)
 
 find_package(catkin REQUIRED COMPONENTS roscpp)
+find_package(Boost REQUIRED thread)
 
 ###################################
 ## catkin specific configuration ##
@@ -19,15 +20,22 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${ati_sensor_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
-## add_library(compensation_cylinder
-##   src/compensation_cylinder.cpp
-## )
+
+add_library(compensation_cylinder
+  src/compensation_cylinder.cpp
+)
+add_dependencies(compensation_cylinder ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(compensation_cylinder
+  ${catkin_LIBRARIES}
+)
 
 ## Specify libraries to link a library or executable target against
-## target_link_libraries(compensation_cylinder ati_sensor ${catkin_LIBRARIES})
+target_link_libraries(compensation_cylinder ati_sensor ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 #############
 ## Install ##
