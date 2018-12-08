@@ -22,6 +22,8 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+#ifndef ATI_SENSOR_H
+#define ATI_SENSOR_H
 
 #include<iostream>
 #include<fstream>
@@ -44,11 +46,10 @@
 #include <time.h>
 #include <sys/time.h>
 #include <signal.h>
-
-#include <boost/thread/thread.hpp> 
-#include <boost/bind.hpp>
-
+// #include <boost/bind.hpp>
+// #include <boost/thread/thread.hpp> 
 using namespace std;
+// using namespace boost;
 
 typedef unsigned int uint32;
 typedef int int32;
@@ -67,11 +68,11 @@ typedef struct response_struct {
 static const int NSEC_PER_SECOND = 1e+9;
 static const int USEC_PER_SECOND = 1e+6;
 
-class ATI_sensor
+class ati_sensor
 {
 public:
-    ATI_sensor(const std::string& ipaddress);
-    ~ATI_sensor();
+    ati_sensor(const std::string& ipaddress);
+    ~ati_sensor();
 
     void set_timer();
     void uninit_time();
@@ -85,13 +86,16 @@ public:
     
     
     RESPONSE resp;
+
+    ofstream of;
 private:
-    boost::thread thrd;    
+    string ip;
+    //thread thrd();    
     byte request[8];
     byte response[36];
     
     int SourceNum;//for filter
-    RESPONSE respSource[SourceNum];//for filter
+    RESPONSE respSource[5];//for filter
     
     int clisock;
     struct timespec before;
@@ -99,7 +103,8 @@ private:
     struct timespec begin_time;
     int time_pass;
     int counts;
-    ofstream of;
     int period_usec;
     int counts_totle;
-}
+};
+
+#endif

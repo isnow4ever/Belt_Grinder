@@ -20,7 +20,6 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -29,7 +28,7 @@ add_library(ati_sensor
 )
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(ati_sensor  ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(ati_sensor  ${catkin_LIBRARIES})
 
 #############
 ## Install ##

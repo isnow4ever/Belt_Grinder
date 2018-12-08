@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(belt_grinder)
 
-find_package(catkin REQUIRED COMPONENTS roscpp)
-#find_package(ethercat_manager minas_control ati_sensor compensation_cylinder)
+find_package(catkin REQUIRED COMPONENTS roscpp ati_sensor compensation_cylinder minas_control)
 
 ###################################
 ## catkin specific configuration ##
@@ -20,6 +19,7 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -72,3 +72,10 @@ add_custom_target(debbuild_${PROJECT_NAME}
   COMMAND rm -fr debian obj-x86_64-linux-gnu
   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
   )
+
+
+add_executable(belt_grinder
+  src/belt_grinder.cpp
+)
+add_dependencies(belt_grinder ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(belt_grinder ${catkin_LIBRARIES} ati_sensor)

@@ -1,11 +1,11 @@
 #include <ati_sensor/ati_sensor.h>
 
 
-ATI_sensor::ATI_sensor(std::string& ipaddress)
+ati_sensor::ati_sensor(const std::string& ipaddress):ip(ipaddress)
 {
     //char ipaddress[35] = "192.168.1.1";
     sockaddr_in cli;
-    cli.sin_addr.s_addr = inet_addr(ipaddress);
+    cli.sin_addr.s_addr = inet_addr(ip.c_str());
     cli.sin_family = AF_INET;
     cli.sin_port = htons(49152);
 
@@ -23,16 +23,16 @@ ATI_sensor::ATI_sensor(std::string& ipaddress)
     *(uint16*)&request[2] = htons(2); /* per table 9.1 in Net F/T user manual. */
     *(uint32*)&request[4] = htonl(1); /* see section 9.1 in Net F/T user manual. */
 
-    respSource = 5;
+    SourceNum = 5;
     period_usec = 30000;
     counts_totle = 100000;
 }
 
-ATI_sensor::~ATI_sensor()
+ati_sensor::~ati_sensor()
 {
 }
 
-void ATI_sensor::set_timer()
+void ati_sensor::set_timer()
 {
     struct itimerval itv, oldtv;
     itv.it_interval.tv_sec = 0;
@@ -45,7 +45,7 @@ void ATI_sensor::set_timer()
     setitimer(ITIMER_REAL, &itv, &oldtv);
 }
 
-void ATI_sensor::uninit_time()
+void ati_sensor::uninit_time()
 {
     struct itimerval value;
     value.it_value.tv_sec = 0;
@@ -54,7 +54,7 @@ void ATI_sensor::uninit_time()
     setitimer(ITIMER_REAL, &value, NULL);
 }
 
-void ATI_sensor::read_once()
+void ati_sensor::read_once()
 {
     send(clisock, (const char*)request, 8, 0); //发送请求，接受数据
     recv(clisock, (char*)response, 36, 0);
@@ -73,7 +73,7 @@ void ATI_sensor::read_once()
 }
 
 
-void ATI_sensor::read()
+void ati_sensor::read()
 {
     send(clisock, (const char*)request, 8, 0); //发送请求，接受数据
     recv(clisock, (char*)response, 36, 0);
@@ -111,7 +111,7 @@ void ATI_sensor::read()
     }
 }
 
-void ATI_sensor::filter()
+void ati_sensor::filter()
 {
     send(clisock, (const char*)request, 8, 0); //发送请求，接受数据
     recv(clisock, (char*)response, 36, 0);
@@ -145,7 +145,7 @@ void ATI_sensor::filter()
     cout<<endl;
 }
 
-void ATI_sensor::zero()
+void ati_sensor::zero()
 {
     send(clisock, (const char*)request, 8, 0); //发送请求，接受数据
     recv(clisock, (char*)response, 36, 0);
@@ -153,22 +153,22 @@ void ATI_sensor::zero()
         resp.FTZero[i] = ntohl(*(int32*)&response[12 + i * 4]);
 }
 
-void ATI_sensor::read_all()
+void ati_sensor::read_all()
 {
     filter();
-    boost::this_thread::sleep(boost::posix_time::milliseconds(100));
+    usleep(100000);
 }
 
-void ATI_sensor::create_thread()
-{
-    thrd = boost::thread(boost::bind(&read_all));
-}
+// void ati_sensor::create_thread()
+// {
+//     thrd = boost::thread(boost::bind(&read_all));
+// }
 
-void ATI_sensor::destroy_thread()
-{
-    thrd.interrupt();
-    thrd.join();
-}
+// void ati_sensor::destroy_thread()
+// {
+//     thrd.interrupt();
+//     thrd.join();
+// }
 /*
 int main(int argc, char *argv[])
 {
