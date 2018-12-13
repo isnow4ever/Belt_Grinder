@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(belt_grinder)
 
-find_package(catkin REQUIRED COMPONENTS roscpp ati_sensor compensation_cylinder minas_control)
+find_package(catkin REQUIRED COMPONENTS roscpp ati_sensor compensation_cylinder minas_control ethercat_manager soem realtime_tools controller_manager diagnostic_updater transmission_interface hardware_interface sensor_msgs joint_limits_interface trajectory_msgs)
 
 ###################################
 ## catkin specific configuration ##
@@ -20,6 +20,7 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
+  ${soem_INCLUDE_DIRS}/soem
 )
 
 ## Declare a C++ library
@@ -78,4 +79,4 @@ add_executable(belt_grinder
   src/belt_grinder.cpp
 )
 add_dependencies(belt_grinder ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(belt_grinder ${catkin_LIBRARIES} ati_sensor)
+target_link_libraries(belt_grinder ${catkin_LIBRARIES} ati_sensor ethercat_manager minas_client)

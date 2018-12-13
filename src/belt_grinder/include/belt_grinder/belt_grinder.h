@@ -26,6 +26,11 @@
 #define BELT_GRINDER_H
 
 #include <ati_sensor/ati_sensor.h>
+#include <stdio.h>
+
+#include <getopt.h>
+#include <time.h>
+
 #include <boost/thread/thread.hpp>
 #include <boost/bind.hpp>
 

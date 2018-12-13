@@ -125,7 +125,8 @@ int main(int argc, char *argv[])
       // pp control model setup (see statusword(6041.h) 3) p.107)
       client->writeOutputs(output);
       while ( ! (input.statusword & 0x1000) ) {// bit12 (set-point-acknowledge)Ϊ1����ѭ�� 
-	input = client->readInputs();
+	      printf("statusword:%d\n",input.statusword);
+        input = client->readInputs();
       }
       output.controlword   &= ~0x0010; // clear new-set-point (bit4)
       client->writeOutputs(output);

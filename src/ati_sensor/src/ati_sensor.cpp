@@ -10,6 +10,7 @@ ati_sensor::ati_sensor(const std::string& ipaddress):ip(ipaddress)
     cli.sin_port = htons(49152);
 
     clisock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);//创建socket
+    // cout << clisock << endl;
     if (clisock == -1)
         cout<<"Socket could not be opened"<<endl;
     else
@@ -88,15 +89,15 @@ void ati_sensor::read()
         temp_FT[5] = resp.FTData[5]; //输出Tz
     clock_gettime(CLOCK_REALTIME, &now);
     time_pass=now.tv_sec-begin_time.tv_sec;
-    cout<<time_pass<<'s';
-    of<<time_pass<<'s';
-    for(int i=0;i<6;++i)
-    {
-        cout<<temp_FT[i]<<" , ";
-        of<<temp_FT[i]<<" , ";
-    }
-    cout<<endl;
-    of<<endl;
+    // cout<<time_pass<<'s ';
+    // of<<time_pass<<'s ';
+    // for(int i=0;i<6;++i)
+    // {
+        // cout<<temp_FT[i]<<" , ";
+        // of<<temp_FT[i]<<" , ";
+    // }
+    // cout<<endl;
+    // of<<endl;
     // check overrun
     double overrun_time = ((now.tv_sec + double(now.tv_nsec)/NSEC_PER_SECOND) -  (before.tv_sec + double(before.tv_nsec)/NSEC_PER_SECOND))-period_usec;
     if (overrun_time > 0.0)
@@ -133,16 +134,17 @@ void ati_sensor::filter()
             sum += respSource[j].FTData[i];
         resp_aver.FTData[i] = sum / SourceNum;
     }
-    int32 temp_FT[6];
-    temp_FT[0] = resp_aver.FTData[0]; //输出Fx
-    temp_FT[1] = resp_aver.FTData[1]; //输出Fy
-    temp_FT[2] = resp_aver.FTData[2]; //输出Fz
-    temp_FT[3] = resp_aver.FTData[3]; //输出Tx
-    temp_FT[4] = resp_aver.FTData[4]; //输出Ty
-    temp_FT[5] = resp_aver.FTData[5]; //输出Tz
-    for(int i=0;i<6;++i)
-        cout<<temp_FT[i]<<" , ";
-    cout<<endl;
+    resp = resp_aver;
+    // int32 temp_FT[6];
+    // temp_FT[0] = resp_aver.FTData[0]; //输出Fx
+    // temp_FT[1] = resp_aver.FTData[1]; //输出Fy
+    // temp_FT[2] = resp_aver.FTData[2]; //输出Fz
+    // temp_FT[3] = resp_aver.FTData[3]; //输出Tx
+    // temp_FT[4] = resp_aver.FTData[4]; //输出Ty
+    // temp_FT[5] = resp_aver.FTData[5]; //输出Tz
+    // for(int i=0;i<6;++i)
+    //     cout<<temp_FT[i]<<" , ";
+    // cout<<endl;
 }
 
 void ati_sensor::zero()
@@ -150,13 +152,22 @@ void ati_sensor::zero()
     send(clisock, (const char*)request, 8, 0); //发送请求，接受数据
     recv(clisock, (char*)response, 36, 0);
     for (int i = 0; i < 6; ++i)
+    {
         resp.FTZero[i] = ntohl(*(int32*)&response[12 + i * 4]);
+        cout<<resp.FTZero[i]<<endl;
+    }
+        
 }
 
 void ati_sensor::read_all()
 {
-    filter();
-    usleep(100000);
+    cout<<"thread started!"<<endl;
+    while(1)
+    {
+        read();
+        usleep(10000);
+        boost::this_thread::interruption_point();
+    }
 }
 
 // void ati_sensor::create_thread()

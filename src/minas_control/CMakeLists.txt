@@ -7,7 +7,10 @@ find_package(catkin REQUIRED COMPONENTS controller_manager diagnostic_updater tr
 ## catkin specific configuration ##
 ###################################
 catkin_package(
-  CATKIN_DEPENDS diagnostic_updater trajectory_msgs sensor_msgs)
+  INCLUDE_DIRS include
+  CATKIN_DEPENDS diagnostic_updater trajectory_msgs sensor_msgs
+  LIBRARIES minas_client
+  )
 
 ###########
 ## Build ##
